@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for-key</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <h3>华山论剑</h3>
+            <label>Id:
+                <input type="text" v-model="id">
+            </label>
+            <label>绰号:
+                <input type="text" v-model="name">
+            </label>
+            <input type="button" value="晋级" @click="add">
+            <table>
+                <!-- :key="item.id" -->
+                <tr v-for="item in list" :key="item.id">
+                    <td><input type="checkbox" /></td>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div :class="['red', 'default']">
+            待我长发及腰，东风笑别菡涛。
+            参商一面将报，百里关山人笑。
+        </div>
+
+        <div :class="['default', isActive?'active':'']">
+            待我长发及腰，东风笑别菡涛。
+            参商一面将报，百里关山人笑。
+        </div>
+
+        <div :class="{default:true, italic:true, active:true}">
+            待我长发及腰，东风笑别菡涛。
+            参商一面将报，百里关山人笑。
+        </div>
+
+        <div :style="{color:'blue', 'font-size':'24px'}">
+            待我长发及腰，东风笑别菡涛。
+            参商一面将报，百里关山人笑。
+        </div>
+
+
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                list: [
+                    { id: 1, name: '东邪-黄药师' },
+                    { id: 2, name: '西毒-欧阳锋' },
+                    { id: 3, name: '南帝-段智兴' },
+                    { id: 4, name: '北丐-洪七公' },
+                    { id: 5, name: '中神通-王重阳 ' }
+                ]
+            },
+            methods: {
+                add() { // 添加方法 unshift() 将新项添加到数组起始位置:
+                    var _id = this.id
+                    var _name = this.name
+                    var hasModel = this.list.some(function (model) {
+                        // console.log(model.id);
+                        // console.log(model.id == _id);
+                        // console.log(model.name);
+                        // console.log(model.name == _name);
+                        // console.log(model.id == _id || model.name == _name);
+                        return model.id == _id || model.name == _name
+                    })
+                    if (!hasModel) {
+                        console.log(hasModel);
+                        this.list.unshift({ id: this.id, name: this.name })
+                    }
+                    else
+                        alert("Input Wrong")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

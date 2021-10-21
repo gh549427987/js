@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+
+    <div id="app">
+        <div class='container' v-text="msg" @mouseenter="stop()" @mouseleave="start()">
+
+        </div>
+    </div>
+
+    <script>
+        const app=new Vue({
+            el:'#app',
+            data: {
+                msg: '你见或者不见我,我就在那里,不悲不喜;你念或者不念我,情就在那里,不来不去',
+                interval: null // 在data上定义定时器对象
+            },
+             //Vue的钩子函数，页面一加载就执行，只执行一次。此时可以获取date和methods中的对象，但Dom结构还没有初始化完成，也就是说无法进行Dom操作。
+             created() {
+                this.start();
+            },
+            methods: {
+                start() {
+                    if (this.interval != null) return;
+                    this.interval = setInterval(() => {
+                        var start = this.msg.substring(0, 1);
+                        var end = this.msg.substring(1);
+                        this.msg = end+start;
+                    }, 300)
+                },
+                stop() {
+                    clearInterval(this.interval)
+                    this.interval = null
+                }
+            }
+        })
+    </script>
+</body>
+</html>
